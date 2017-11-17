@@ -16,6 +16,9 @@
 		8B18BD961FBEE5C900373ACC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B18BD951FBEE5C900373ACC /* Assets.xcassets */; };
 		8B18BD991FBEE5C900373ACC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B18BD971FBEE5C900373ACC /* LaunchScreen.storyboard */; };
 		8B18BD9C1FBEE5C900373ACC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B18BD9B1FBEE5C900373ACC /* main.m */; };
+		8B18BDA31FBEEFED00373ACC /* MyParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8B18BDA21FBEEFED00373ACC /* MyParticle.sks */; };
+		8B18BDA51FBEF8E400373ACC /* sound.aif in Resources */ = {isa = PBXBuildFile; fileRef = 8B18BDA41FBEF8E400373ACC /* sound.aif */; };
+		8B18BDA71FBEF9A900373ACC /* ballcknock.aif in Resources */ = {isa = PBXBuildFile; fileRef = 8B18BDA61FBEF9A900373ACC /* ballcknock.aif */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +36,9 @@
 		8B18BD981FBEE5C900373ACC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8B18BD9A1FBEE5C900373ACC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B18BD9B1FBEE5C900373ACC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		8B18BDA21FBEEFED00373ACC /* MyParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = MyParticle.sks; path = "Collision Effects/MyParticle.sks"; sourceTree = "<group>"; };
+		8B18BDA41FBEF8E400373ACC /* sound.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = sound.aif; sourceTree = "<group>"; };
+		8B18BDA61FBEF9A900373ACC /* ballcknock.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = ballcknock.aif; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +55,7 @@
 		8B18BD791FBEE5C900373ACC = {
 			isa = PBXGroup;
 			children = (
+				8B18BDA21FBEEFED00373ACC /* MyParticle.sks */,
 				8B18BD841FBEE5C900373ACC /* Collision Effects */,
 				8B18BD831FBEE5C900373ACC /* Products */,
 			);
@@ -71,6 +78,8 @@
 				8B18BD8A1FBEE5C900373ACC /* Actions.sks */,
 				8B18BD8C1FBEE5C900373ACC /* GameScene.h */,
 				8B18BD8D1FBEE5C900373ACC /* GameScene.m */,
+				8B18BDA41FBEF8E400373ACC /* sound.aif */,
+				8B18BDA61FBEF9A900373ACC /* ballcknock.aif */,
 				8B18BD8F1FBEE5C900373ACC /* GameViewController.h */,
 				8B18BD901FBEE5C900373ACC /* GameViewController.m */,
 				8B18BD921FBEE5C900373ACC /* Main.storyboard */,
@@ -140,7 +149,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B18BDA71FBEF9A900373ACC /* ballcknock.aif in Resources */,
+				8B18BDA51FBEF8E400373ACC /* sound.aif in Resources */,
 				8B18BD941FBEE5C900373ACC /* Main.storyboard in Resources */,
+				8B18BDA31FBEEFED00373ACC /* MyParticle.sks in Resources */,
 				8B18BD891FBEE5C900373ACC /* GameScene.sks in Resources */,
 				8B18BD961FBEE5C900373ACC /* Assets.xcassets in Resources */,
 				8B18BD991FBEE5C900373ACC /* LaunchScreen.storyboard in Resources */,

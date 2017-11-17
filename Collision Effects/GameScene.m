@@ -8,70 +8,66 @@
 
 #import "GameScene.h"
 
-@implementation GameScene {
-    SKShapeNode *_spinnyNode;
-    SKLabelNode *_label;
+@interface GameScene() <SKPhysicsContactDelegate>
+@property SKSpriteNode *ball;
+@end
+
+@implementation GameScene
+
+- (void)didMoveToView:(SKView *)view
+{
+    self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:self.frame];
+    self.scaleMode = SKSceneScaleModeAspectFill;
+    self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:self.frame];
+    self.physicsWorld.contactDelegate = self;
+    self.name = @"fence";
+    
+    _ball = [SKSpriteNode spriteNodeWithImageNamed:@"ball.png"];
+    _ball.name = @"ball";
+    _ball.size = CGSizeMake(100, 100);
+    _ball.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:_ball.size.width/2];
+    _ball.physicsBody.dynamic = YES;
+    _ball.position = CGPointMake(80, 400);
+    _ball.physicsBody.friction = 0.0;
+    _ball.physicsBody.restitution = 1.0;
+    _ball.physicsBody.linearDamping = 0.0;
+    _ball.physicsBody.angularDamping = 0.0;
+    _ball.physicsBody.allowsRotation = YES;
+    _ball.physicsBody.mass = 1.0;
+    _ball.physicsBody.affectedByGravity = YES;
+    _ball.physicsBody.velocity = CGVectorMake(100, 0);
+    _ball.physicsBody.contactTestBitMask = 0x1;
+    _ball.zPosition = 1;
+
+    [self addChild:_ball];
 }
 
-- (void)didMoveToView:(SKView *)view {
-    // Setup your scene here
-    
-    // Get label node from scene and store it for use later
-    _label = (SKLabelNode *)[self childNodeWithName:@"//helloLabel"];
-    
-    _label.alpha = 0.0;
-    [_label runAction:[SKAction fadeInWithDuration:2.0]];
-    
-    CGFloat w = (self.size.width + self.size.height) * 0.05;
-    
-    // Create shape node to use during mouse interaction
-    _spinnyNode = [SKShapeNode shapeNodeWithRectOfSize:CGSizeMake(w, w) cornerRadius:w * 0.3];
-    _spinnyNode.lineWidth = 2.5;
-    
-    [_spinnyNode runAction:[SKAction repeatActionForever:[SKAction rotateByAngle:M_PI duration:1]]];
-    [_spinnyNode runAction:[SKAction sequence:@[
-                                                [SKAction waitForDuration:0.5],
-                                                [SKAction fadeOutWithDuration:0.5],
-                                                [SKAction removeFromParent],
-                                                ]]];
+- (void)didBeginContact:(SKPhysicsContact *)contact
+{
+    [self performSelector:@selector(stopBall) withObject:self afterDelay:6.0];
+    NSString *magic = [[NSBundle mainBundle] pathForResource:@"MyParticle" ofType:@"sks"];
+    SKEmitterNode *emMagic = [NSKeyedUnarchiver unarchiveObjectWithFile:magic];
+    emMagic.position = CGPointMake(0, -10);
+    [_ball addChild:emMagic];
+    [self runAction:[SKAction playSoundFileNamed:@"ballcknock.aif" waitForCompletion:YES]];
+    float grav = self.physicsWorld.gravity.dy - 0.8;
+    [self.physicsWorld setGravity:CGVectorMake(0, grav)];
 }
-
-
-- (void)touchDownAtPoint:(CGPoint)pos {
-    SKShapeNode *n = [_spinnyNode copy];
-    n.position = pos;
-    n.strokeColor = [SKColor greenColor];
-    [self addChild:n];
+- (void)didEndContact:(SKPhysicsContact *)contact
+{
+    [self performSelector:@selector(remove) withObject:self afterDelay:0.3];
 }
-
-- (void)touchMovedToPoint:(CGPoint)pos {
-    SKShapeNode *n = [_spinnyNode copy];
-    n.position = pos;
-    n.strokeColor = [SKColor blueColor];
-    [self addChild:n];
+- (void)remove
+{
+    NSString *magic = [[NSBundle mainBundle] pathForResource:@"MyParticle" ofType:@"sks"];
+    SKEmitterNode *emMagic = [NSKeyedUnarchiver unarchiveObjectWithFile:magic];
+    emMagic.position = CGPointMake(0, -10);
+    [_ball removeAllChildren];
 }
-
-- (void)touchUpAtPoint:(CGPoint)pos {
-    SKShapeNode *n = [_spinnyNode copy];
-    n.position = pos;
-    n.strokeColor = [SKColor redColor];
-    [self addChild:n];
-}
-
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    // Run 'Pulse' action from 'Actions.sks'
-    [_label runAction:[SKAction actionNamed:@"Pulse"] withKey:@"fadeInOut"];
-    
-    for (UITouch *t in touches) {[self touchDownAtPoint:[t locationInNode:self]];}
-}
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
-    for (UITouch *t in touches) {[self touchMovedToPoint:[t locationInNode:self]];}
-}
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    for (UITouch *t in touches) {[self touchUpAtPoint:[t locationInNode:self]];}
-}
-- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
-    for (UITouch *t in touches) {[self touchUpAtPoint:[t locationInNode:self]];}
+- (void)stopBall
+{
+    [self.physicsWorld setGravity:CGVectorMake(0, -1)];
+    [_ball removeAllChildren];
 }
 
 
